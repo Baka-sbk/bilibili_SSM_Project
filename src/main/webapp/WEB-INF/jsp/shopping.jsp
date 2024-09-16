@@ -36,54 +36,8 @@
 </style>
 </head>
 <body>
+<%@include file="head2.jsp"%>
 
-	<header id="header">
-	<div id="page_top">
-		<div class="bg-wrap">
-			<div class="bg"></div>
-			<div class="mask"></div>
-		</div>
-		<div class="header-top">
-			<div class="page-width clearfix">
-				<div class="header-top__nav">
-					<ul>
-						<li class="item item-home"><a href="../index.jsp">首页</a></li>
-						<li class="item"><a href="shopping" style="color: red;">会员购</a></li>
-					</ul>
-				</div>
-				<div class="header-top__user">
-					<div class="login-box">
-						<a href="login">登录</a> <span></span> <a href="regist">注册</a>
-					</div>
-					<div class="user-post">
-						<a href="javascript:isLoginWithOrder()" class="link">订单中心</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="header-c">
-		<div class="page-width">
-			<a href="#" id="header_logo"></a>
-			<p id="header_title"></p>
-			<div id="search" class="clearfix">
-				<div class="search-box">
-					<input type="text" class="text" placeholder="Search here...">
-					<a href="#" class="btn"><i></i></a>
-					<div class="search-history">
-						<div class="title">历史搜索</div>
-						<div class="list">
-							<a href="#">努巴尼欢乐秀<i></i></a> <a href="#">主播真会玩守望篇<i></i></a> <a
-								href="#">主播真会玩女神篇<i></i></a> <a href="#">暴暴勺暴暴<i></i></a> <a
-								href="#">武汉漫展<i></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="header-title">哔哩哔哩 (゜-゜)つロ 干杯~</div>
-		</div>
-	</div>
-	</header>
 	<!-- 商品列表 -->
 	<div class="tab-content">
 
@@ -128,7 +82,7 @@
 		<!-- 分页工具 -->
 		<!-- 隐藏域 -->
 				<input type="hidden" id="totalPage-hidden" value=""/>
-				<input type="hidden" id="username-hidden" value="1"/><!-- ${sessionScope.account.user_id} -->
+				<input type="hidden" id="username-hidden" value="${sessionScope.account.userId}"/><!-- ${sessionScope.account.userId} -->
 		<div></div>
 		<footer id="footer">
 		<div class="page-width">
@@ -164,13 +118,13 @@
 		<script type="text/javascript">
 		
 		//加入购物车 是否登录
-		function isLoginWithCart(data){
+		function isLoginWithCart(goodId){
 			if($("#username-hidden").val()==""||$("#username-hidden").val()==null){
 				alert("请先登录");
 				location.href="login";
 			}else{
 				var userId=$("#username-hidden").val();
-				addCart(data,userId);
+				addCart(goodId,userId);
 			}
 			
 		}
@@ -191,15 +145,22 @@
 				if(stock>1){
 					if(map.addCartRs==1){
 						alert("成功将"+map.good.commodityname+"加入到购物车！");
- 						location.href="${pageContext.request.contextPath}/shopping/getCommodity/"+goodId+"/"+userId;
+						var goodNum=1;
+						location.href="${pageContext.request.contextPath}/shopping/goOrder/"+goodId+"/"+goodNum;
 					}else{
 						alert("票已售空！");
 					}
 				}
-				
-				
 			},"JSON");		
 		}
+		
+		//详细页
+		function goGood(goodId){
+			var userId = $("#username-hidden").val();
+				location.href="${pageContext.request.contextPath}/shopping/goOrder/"+goodId+"/"+userId;
+		}
+		
+		
 		
 		
 		//分页
@@ -219,14 +180,14 @@
 							content = "<div class='project-list-item'>"
 									+ "<div class='project-list-item-img' style='background-image:url(&quot;.."
 									+ data.list[i].commodityimg
-									+ "&quot;);'></div>"
+									+ "&quot;);' onclick='goGood("+data.list[i].commodityid+")'></div>"
 									+ "<div class='project-list-item-detail'>"
-									+ "<div class='project-list-item-title'>"
+									+ "<div class='project-list-item-title' onclick='goGood("+data.list[i].commodityid+")'>"
 									+ data.list[i].commodityname
-									+ "</div><div class='project-list-item-time' style='height: 10px'>"
+									+ "</div><div class='project-list-item-time' style='height: 10px'  onclick='goGood("+data.list[i].commodityid+")'>"
 									+ "<i class='czs-calendar'></i>"
 									+ data.list[i].commoditytime
-									+ "</div><div class='project-list-item-address'>"
+									+ "</div><div class='project-list-item-address' onclick='goGood("+data.list[i].commodityid+")'>"
 									+ "<span class='icon address-icon'></span>  <span class='city-name'>"
 									+ data.list[i].commodityaddress
 									+ "</span><span class='venue-name-and-address'></span>"

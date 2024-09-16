@@ -18,11 +18,11 @@
 				<div class="nav-con fl">
 					<ul>
 						<li report-id="playpage_main" class="nav-item home"><a
-							href="${pageContext.request.contextPath}/page/index" title="主站" class="t"><i
+							href="${pageContext.request.contextPath}/index.jsp" title="主站" class="t"><i
 								class="header-iconfont header-icon-bilibili-tv"></i> 主站 <!----></a>
 						<!----></li>
 						<li report-id="playpage_buy" class="nav-item buy"><a
-							href="#">会员购</a></li>
+							href="${pageContext.request.contextPath}/page/shopping">会员购</a></li>
 					</ul>
 				</div>
 				<div report-id="playpage_contribution" class="up-load fr">

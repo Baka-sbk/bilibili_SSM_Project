@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>${good.commodityname}-->详细页面</title>
 <link rel="shortcut icon" href="../favicons/1.png">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/reset.css">
@@ -31,42 +31,7 @@
 </style>
 </head>
 <body>
-	<header id="header">
-	<div id="page_top">
-		<div class="bg-wrap">
-			<div class="bg"></div>
-			<div class="mask"></div>
-		</div>
-		<div class="header-top">
-			<div class="page-width clearfix">
-				<div class="header-top__nav">
-					<ul>
-						<li class="item item-home"><a
-							href="${pageContext.request.contextPath}/index.jsp">首页</a></li>
-						<li class="item"><a href="${pageContext.request.contextPath}/page/shopping" style="color: red;">会员购</a></li>
-					</ul>
-				</div>
-				<div class="header-top__user">
-					<div class="login-box">
-						<a href="${pageContext.request.contextPath}/page/login">登录</a> <span></span> <a href="${pageContext.request.contextPath}/page/regist">注册</a>
-					</div>
-					<div class="user-post">
-						<a href="javascript:isLoginWithOrder()" class="link">订单中心</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="header-c">
-		<div class="page-width">
-			<a href="#" id="header_logo"></a>
-			<p id="header_title"></p>
-
-			<div class="header-title">哔哩哔哩 (゜-゜)つロ 干杯~</div>
-		</div>
-	</div>
-	</header>
-
+<%@include file="head2.jsp"%>
 
 	<div id="myDiv">
 		<div class="whole-detail-info-wrapper">
@@ -127,11 +92,11 @@
 	</div>
 	<!-- 隐藏域 -->
 	<input type="hidden" id="username-hidden" value="1" />
-	<!-- ${sessionScope.account.user_id} -->
+	<!-- ${sessionScope.account.userId} -->
 	<input type="hidden" id="commodityid-hidden"
 		value="${good.commodityid}" />
 	<input type="hidden" id="userId"
-		value="${sessionScope.account.user_id}" />
+		value="${sessionScope.account.userId}" />
 	<input type="hidden" id="commoditystock-hidden"
 		value="${good.commoditystock}" />
 
@@ -179,7 +144,7 @@
 
 			//增加数量  
 			$(".count-plus").click(function() {
-				if (count <= $("#commoditystock-hidden").val()) {
+				if (count < $("#commoditystock-hidden").val()) {
 					count++;
 					$(".count-number").html(count);
 				} else {
@@ -201,11 +166,10 @@
 			//${pageContext.request.contextPath}
 			//提交
 			$("#submit").click(function(){
-				alert(goodId);
-				alert(userId);
-				alert(count);
 				$.post("${pageContext.request.contextPath}/shopping/Buy/"+goodId+"/"+userId+"/"+count,"",function(){
-										
+					
+					location.href="${pageContext.request.contextPath}/page/orderCart/";
+					
 				},"JSON");
 				
 			});

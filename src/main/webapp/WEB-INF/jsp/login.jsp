@@ -45,7 +45,8 @@
 			$.post("${pageContext.request.contextPath}/user/login",$("#loginForm").serialize(),function(data){
 				if(data.result=="ok"){
 					alert("欢迎"+data.account.account+"登录!");
-					location.href="${pageContext.request.contextPath}/page/index";
+					//"${pageContext.request.contextPath}/page/index"
+					location.href="${pageContext.request.contextPath}/index.jsp";
 				}else{
 					alert("账号或密码错误！请重新输入！");
 					location.href="${pageContext.request.contextPath}/page/login";

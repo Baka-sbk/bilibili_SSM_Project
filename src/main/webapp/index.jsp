@@ -18,7 +18,7 @@
     <div class="page-width clearfix">
       <ul class="nav-list">
         <li class="item item-home">
-          <a href="#" class="link">首页</a>
+          <a href="../index.jsp" class="link">首页</a>
         </li>
         <li class="item">
           <a href="#" class="link">

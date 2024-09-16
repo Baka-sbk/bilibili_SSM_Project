@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zilizili.pojo.Cart;
 import com.zilizili.pojo.Commodity;
 import com.zilizili.service.CartService;
 import com.zilizili.service.CommodityService;
@@ -80,14 +83,72 @@ public class ShoppingController {
 		return "shoppingCart";
 	}
 
+	@ResponseBody
 	@RequestMapping("/Buy/{goodId}/{userId}/{goodNum}")
-	public String buy(Model model, @PathVariable("goodId") String goodId, @PathVariable("userId") String userId,
-			@PathVariable("goodNum") String num) {
+	public Map<String, Object> buy(Model model, @PathVariable("goodId") String goodId, @PathVariable("userId") String userId,
+			@PathVariable("goodNum") String num,HttpServletRequest request) {
+		
 		System.out.println("buy");
+		Map<String, Object> map = new HashMap<>();
+
+		Commodity commodity = service.getCommodity(goodId);
+		// 对象返回
+		map.put("good", commodity);
+		
+		
+		for (int i = 0; i < Integer.parseInt(num); i++) {
+			// 加入购物车是否成功
+			map.put("addCartRs", cartService.addCart(userId, goodId));
+		}
 		
 		
 		
 		
+		List<Cart> list = cartService.getCartByUserId(userId);
+		
+		map.put("cartList", list);
+		request.getSession().setAttribute("cart",list);
+		
+		return map;
+
+		
+		
+	}
+	
+	@RequestMapping("/goGood/{goodId}/{userId}")
+	public String goGood(Model model,@PathVariable("goodId")String goodId, @PathVariable("userId") String userId) {
+		System.out.println("goGood");
+
+		Commodity commodity = service.getCommodity(goodId);
+
+		model.addAttribute("good", commodity);
+		return "shoppingCart";
+		
+	}
+
+	//获得购物车内容
+	@ResponseBody
+	@RequestMapping("/getCart/{userId}")
+	public Map<String, Object> getCart(@PathVariable("userId")String userId){
+		System.out.println("getCart");
+		Map<String, Object> map = new HashMap<>();
+
+		List<Cart> list = cartService.getCartByUserId(userId);
+		
+		map.put("list",list);
+		
+		return map;
+	}
+
+	//结算页面
+	@RequestMapping("/goOrder/{goodId}/{goodNum}")
+	public String goOrder(Model model,@PathVariable("goodId")String goodId,@PathVariable("goodNum")String num) {
+		System.out.println();
+		
+		Commodity commodity = service.getCommodity(goodId);
+		
+		model.addAttribute("good",commodity);
+		model.addAttribute("goodNum", num);
 		return "order";
 	}
 

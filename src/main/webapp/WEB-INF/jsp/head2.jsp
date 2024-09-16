@@ -26,7 +26,7 @@
 					</ul>
 				</div>
 				<div report-id="playpage_contribution" class="up-load fr">
-					<a href="#" class="u-link" id="opload"> 投稿 </a>
+					<a href="#" class="u-link" id="opload"> 订单中心 </a>
 					<!---->
 				</div>
 				<div class="nav-con fr">
@@ -54,9 +54,7 @@
 								</div>
 							</li>
 							<li report-id="playpage_history" id="username" class="nav-item" style="margin: 0px;">${account.account}</li>
-						<li report-id="playpage_history" class="nav-item"><a
-							href="#">历史</a>
-						</li>
+					
 					</ul>
 				</div>
 				<div class="nav-con fr">
@@ -70,17 +68,7 @@
 			style="background-image: url(${pageContext.request.contextPath}/images/header_bg.jpg);"
 			scrollshow="true">
 			<div class="head-content bili-wrapper">
-				<div class="search">
-					<form class="searchform">
-						<input type="text" autocomplete="off" accesskey="s"
-							x-webkit-speech="" x-webkit-grammar="builtin:translate"
-							placeholder="大佬，你的肝还好吗" value="" class="search-keyword">
-						<button type="submit" class="search-submit"></button>
-					</form>
-					<!---->
-					<!---->
-					<a href="#"><span>排行榜</span></a>
-				</div>
+			
 				<a href="${pageContext.request.contextPath}/page/index" class="head-logo"
 					style="background-image: url(${pageContext.request.contextPath}/images/header_logo.png);"></a>
 			</div>
